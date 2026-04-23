@@ -1,33 +1,22 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Categories from './components/Categories';
-import About from './components/About';
-import Features from './components/Features';
-import Manufacturing from './components/Manufacturing';
-import Showcase from './components/Showcase';
-import Testimonials from './components/Testimonials';
-import CallToAction from './components/CallToAction';
-import Footer from './components/Footer';
 import ChatAssistant from './components/ChatAssistant';
+import Home from './pages/Home';
+import CategoryPage from './pages/CategoryPage';
 
 function App() {
   return (
-    <div className="app">
-      <Navbar />
-      <main>
-        <Hero />
-        <Categories />
-        <About />
-        <Features />
-        <Manufacturing />
-        <Showcase />
-        <Testimonials />
-        <CallToAction />
-      </main>
-      <Footer />
-      <ChatAssistant />
-    </div>
+    <Router>
+      <div className="app">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/category/:categoryId" element={<CategoryPage />} />
+        </Routes>
+        <ChatAssistant />
+      </div>
+    </Router>
   );
 }
 

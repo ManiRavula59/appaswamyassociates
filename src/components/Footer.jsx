@@ -32,7 +32,7 @@ const Footer = () => {
         <div className={styles.linksCol}>
           <h4>Company</h4>
           <ul>
-            <li><a href="#about">About Us</a></li>
+            <li><a href="/#about">About Us</a></li>
             <li><a href="#">Leadership</a></li>
             <li><button onClick={() => window.dispatchEvent(new CustomEvent('open-chat'))} style={{background: 'none', border: 'none', color: 'inherit', padding: 0, font: 'inherit', cursor: 'pointer', textAlign: 'left'}}>Careers</button></li>
             <li><a href="#">Global Reach</a></li>

@@ -3,18 +3,21 @@ import styles from './Categories.module.css';
 import { motion, useInView } from 'framer-motion';
 import { ArrowRight, Eye, Droplets, Zap, Activity, Microscope, Beaker, Briefcase } from 'lucide-react';
 
+import { useNavigate } from 'react-router-dom';
+
 const categories = [
-  { id: 1, title: 'Micro Surgical', icon: <Eye size={32} />, desc: 'Precision instruments for delicate procedures' },
-  { id: 2, title: 'Surgical & IOL', icon: <Microscope size={32} />, desc: 'Advanced intraocular lenses and systems' },
-  { id: 3, title: 'Laser & Therapeutic', icon: <Zap size={32} />, desc: 'State-of-the-art laser treatments' },
-  { id: 4, title: 'Ophthalmology', icon: <Activity size={32} />, desc: 'Comprehensive diagnostic solutions' },
-  { id: 5, title: 'Ultrasound Scanners', icon: <Activity size={32} />, desc: 'High-resolution ocular imaging' },
-  { id: 6, title: 'Pharmaceuticals', icon: <Droplets size={32} />, desc: 'Specialized ophthalmic medications' },
-  { id: 7, title: 'Industry Partners', icon: <Briefcase size={32} />, desc: 'Global collaborations for better vision' }
+  { id: 1, title: 'Micro Surgical', icon: <Eye size={32} />, desc: 'Precision instruments for delicate procedures', slug: 'microsurgical' },
+  { id: 2, title: 'Surgical & IOL', icon: <Microscope size={32} />, desc: 'Advanced intraocular lenses and systems', slug: 'surgical-iol' },
+  { id: 3, title: 'Laser & Therapeutic', icon: <Zap size={32} />, desc: 'State-of-the-art laser treatments', slug: 'laser-therapeutic' },
+  { id: 4, title: 'Ophthalmology', icon: <Activity size={32} />, desc: 'Comprehensive diagnostic solutions', slug: 'ophthalmology' },
+  { id: 5, title: 'Ultrasound Scanners', icon: <Activity size={32} />, desc: 'High-resolution ocular imaging', slug: 'ultrasound' },
+  { id: 6, title: 'Pharmaceuticals', icon: <Droplets size={32} />, desc: 'Specialized ophthalmic medications', slug: 'pharmaceuticals' },
+  { id: 7, title: 'Industry Partners', icon: <Briefcase size={32} />, desc: 'Global collaborations for better vision', slug: 'industry-partners' }
 ];
 
 const Categories = () => {
   const containerRef = useRef(null);
+  const navigate = useNavigate();
   const isInView = useInView(containerRef, { once: true, margin: "-100px 0px" });
 
   const containerVars = {
@@ -64,7 +67,7 @@ const Categories = () => {
               
               <div 
                 className={styles.linkWrapper}
-                onClick={() => window.dispatchEvent(new CustomEvent('explore-category', { detail: category.title }))}
+                onClick={() => navigate(`/category/${category.slug}`)}
                 style={{cursor: 'pointer'}}
               >
                 <span className={styles.linkText}>Explore</span>
