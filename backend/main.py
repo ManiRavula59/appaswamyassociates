@@ -18,12 +18,11 @@ app.add_middleware(
 class ChatRequest(BaseModel):
     messages: list
 
-# The Bedrock Bearer Token provided by the user
+# The OpenRouter Token provided by the user
 from dotenv import load_dotenv
 load_dotenv()
-BEDROCK_API_KEY = os.getenv("AWS_BEDROCK_TOKEN", "ABSK_MISSING")
-BEDROCK_REGION = "us-east-1"
-MODEL_ID = "anthropic.claude-3-5-sonnet-20240620-v1:0"
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
+MODEL_ID = "nvidia/nemotron-3-nano-30b-a3b:free"
 
 SYSTEM_PROMPT = """You are the AI Assistant for Appasamy Associates.
 Help users navigate the website, explain products, and help them contact the company.
@@ -42,27 +41,27 @@ When a user wants to connect or contact:
 
 @app.post("/api/chat")
 def chat(request: ChatRequest):
-    # Convert incoming standard messages to Anthropic format
-    anthropic_msgs = []
+    # Convert incoming messages to OpenRouter format
+    openrouter_msgs = [{"role": "system", "content": SYSTEM_PROMPT}]
     for msg in request.messages:
-        anthropic_msgs.append({
+        openrouter_msgs.append({
             "role": "user" if msg["role"] == "user" else "assistant", 
             "content": msg["content"]
         })
     
     payload = {
-        "anthropic_version": "bedrock-2023-05-31",
+        "model": MODEL_ID,
+        "messages": openrouter_msgs,
         "max_tokens": 1000,
-        "temperature": 0.7,
-        "system": SYSTEM_PROMPT,
-        "messages": anthropic_msgs
+        "temperature": 0.7
     }
     
-    url = f"https://bedrock-runtime.{BEDROCK_REGION}.amazonaws.com/model/{MODEL_ID}/invoke"
+    url = "https://openrouter.ai/api/v1/chat/completions"
     headers = {
-        "Authorization": f"Bearer {BEDROCK_API_KEY}",
-        "Content-Type": "application/json",
-        "Accept": "application/json",
+        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "HTTP-Referer": "http://localhost:5173", # OpenRouter requires referer
+        "X-Title": "Appaswamy Associates Assistant",
+        "Content-Type": "application/json"
     }
     
     try:
@@ -70,8 +69,8 @@ def chat(request: ChatRequest):
         response.raise_for_status()
         data = response.json()
         
-        # Bedrock Anthropic response structure
-        text = data.get("content", [{"text": ""}])[0].get("text", "")
+        # OpenRouter response structure
+        text = data.get("choices", [{}])[0].get("message", {}).get("content", "")
         return {"content": text}
         
     except Exception as e:
