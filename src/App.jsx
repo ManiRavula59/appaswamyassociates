@@ -4,6 +4,8 @@ import Navbar from './components/Navbar';
 import ChatAssistant from './components/ChatAssistant';
 import Home from './pages/Home';
 import CategoryPage from './pages/CategoryPage';
+import Support from './pages/Support';
+import Careers from './pages/Careers';
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/category/:categoryId" element={<CategoryPage />} />
+          <Route path="/support" element={<Support />} />
+          <Route path="/careers" element={<Careers />} />
         </Routes>
         <ChatAssistant />
       </div>

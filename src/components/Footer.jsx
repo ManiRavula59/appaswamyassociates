@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Footer.module.css';
 import { ArrowRight, Mail, Globe, Share2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -34,7 +35,7 @@ const Footer = () => {
           <ul>
             <li><a href="/#about">About Us</a></li>
             <li><a href="#">Leadership</a></li>
-            <li><button onClick={() => window.dispatchEvent(new CustomEvent('open-chat'))} style={{background: 'none', border: 'none', color: 'inherit', padding: 0, font: 'inherit', cursor: 'pointer', textAlign: 'left'}}>Careers</button></li>
+            <li><Link to="/careers">Careers</Link></li>
             <li><a href="#">Global Reach</a></li>
           </ul>
         </div>

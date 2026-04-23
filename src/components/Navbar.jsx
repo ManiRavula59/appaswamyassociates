@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './Navbar.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ArrowRight } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -19,11 +20,13 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navigate = useNavigate();
+
   const navLinks = [
-    { name: 'Products', href: '/#products' },
-    { name: 'About', href: '/#about' },
-    { name: 'Support', action: () => window.dispatchEvent(new CustomEvent('open-chat')) },
-    { name: 'Careers', action: () => window.dispatchEvent(new CustomEvent('open-chat')) },
+    { name: 'Products', to: '/#products' },
+    { name: 'About', to: '/#about' },
+    { name: 'Support', to: '/support' },
+    { name: 'Careers', to: '/careers' },
   ];
 
   return (
@@ -31,24 +34,23 @@ const Navbar = () => {
       <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
         <div className={`container ${styles.navContainer}`}>
           
-          {/* Logo */}
           <div className={styles.logo}>
-            <a href="#">
+            <Link to="/">
               <img src="https://cdn.prod.website-files.com/637e4dc883878debd9d96de4/63df53786bf1b137a5731bb2_AA%20Logo(1).png" alt="Appasamy Associates" style={{ height: '40px', width: 'auto', display: 'block' }} />
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Nav */}
           <nav className={styles.desktopNav}>
             {navLinks.map((link) => (
-              link.href ? (
-                <a key={link.name} href={link.href} className={styles.navLink}>
+              link.to.startsWith('/#') ? (
+                <a key={link.name} href={link.to} className={styles.navLink}>
                   {link.name}
                 </a>
               ) : (
-                <button key={link.name} onClick={link.action} className={styles.navLink} style={{background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: 'inherit'}}>
+                <Link key={link.name} to={link.to} className={styles.navLink}>
                   {link.name}
-                </button>
+                </Link>
               )
             ))}
           </nav>
@@ -80,7 +82,9 @@ const Navbar = () => {
           >
             <div className={styles.mobileMenuHeader}>
               <div className={styles.logo}>
-                <img src="https://cdn.prod.website-files.com/637e4dc883878debd9d96de4/63df53786bf1b137a5731bb2_AA%20Logo(1).png" alt="Appasamy Associates" style={{ height: '32px', width: 'auto', display: 'block' }} />
+                <Link to="/" onClick={() => setMobileMenuOpen(false)}>
+                  <img src="https://cdn.prod.website-files.com/637e4dc883878debd9d96de4/63df53786bf1b137a5731bb2_AA%20Logo(1).png" alt="Appasamy Associates" style={{ height: '32px', width: 'auto', display: 'block' }} />
+                </Link>
               </div>
               <button 
                 onClick={() => setMobileMenuOpen(false)}
@@ -92,10 +96,10 @@ const Navbar = () => {
             
             <div className={styles.mobileNavLinks}>
               {navLinks.map((link, i) => (
-                link.href ? (
+                link.to.startsWith('/#') ? (
                   <motion.a 
                     key={link.name} 
-                    href={link.href}
+                    href={link.to}
                     className={styles.mobileNavLink}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -105,20 +109,21 @@ const Navbar = () => {
                     {link.name} <ArrowRight size={16} />
                   </motion.a>
                 ) : (
-                  <motion.button 
-                    key={link.name} 
-                    className={styles.mobileNavLink}
+                  <motion.div
+                    key={link.name}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.1 + 0.1 }}
-                    onClick={() => {
-                      setMobileMenuOpen(false);
-                      link.action();
-                    }}
-                    style={{background: 'none', border: 'none', textAlign: 'left', width: '100%', fontFamily: 'inherit'}}
                   >
-                    {link.name} <ArrowRight size={16} />
-                  </motion.button>
+                    <Link
+                      to={link.to}
+                      className={styles.mobileNavLink}
+                      onClick={() => setMobileMenuOpen(false)}
+                      style={{display: 'flex', justifyContent: 'space-between'}}
+                    >
+                      {link.name} <ArrowRight size={16} />
+                    </Link>
+                  </motion.div>
                 )
               ))}
               
