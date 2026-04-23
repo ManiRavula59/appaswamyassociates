@@ -35,42 +35,26 @@ export default function ChatAssistant() {
   }, [messages, isOpen]);
 
   const callBedrockAPI = async (userMessage, conversationHistory) => {
-    // Get token from environment variables instead of hardcoding
-    const token = import.meta.env.VITE_AWS_BEDROCK_TOKEN || "";
-    
-    // Convert history to a text prompt suitable for a generic LLM completion
-    let prompt = SYSTEM_PROMPT + "\n\n";
-    conversationHistory.forEach(msg => {
-      prompt += `\n\n${msg.role === 'user' ? 'Human' : 'Assistant'}: ${msg.content}`;
-    });
-    prompt += `\n\nHuman: ${userMessage}\n\nAssistant:`;
-
     try {
-      // NOTE: Replace this URL with your actual AWS API Gateway endpoint that forwards to Bedrock.
-      // Since Bedrock requires AWS Signature V4 natively, a Bearer token typically means you have a custom proxy endpoint.
-      const response = await fetch('YOUR_BEDROCK_API_GATEWAY_URL_HERE', {
+      const response = await fetch('http://localhost:8001/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          prompt: prompt,
-          max_tokens: 1000,
-          temperature: 0.7,
+          messages: [...conversationHistory, { role: 'user', content: userMessage }]
         })
       });
       
       if (!response.ok) {
-        throw new Error('API request failed. Please check your Bedrock Endpoint URL.');
+        throw new Error('Backend request failed.');
       }
       
       const data = await response.json();
-      return data.completion || data.text || data.message || "Sorry, I received an empty response.";
+      return data.content || "Sorry, I received an empty response.";
     } catch (error) {
       console.error(error);
-      // Fallback response so you can test the UI flow even without a working endpoint URL yet
-      return `[API Endpoint Error: ${error.message}]\n\nSince the API endpoint URL needs to be configured in the code, I will provide the contact options directly for you:\n\n<WHATSAPP_LINK>\n<EMAIL_FALLBACK>`;
+      return `[Backend Connection Error: ${error.message}]\n\nSince I cannot reach the backend right now, I will provide the contact options directly for you:\n\n<WHATSAPP_LINK>\n<EMAIL_FALLBACK>`;
     }
   };
 
