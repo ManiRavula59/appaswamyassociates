@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, X, Send, Mail, Phone } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import styles from './ChatAssistant.module.css';
 
 const SYSTEM_PROMPT = `You are the AI Assistant for Appasamy Associates.
@@ -16,7 +18,7 @@ When a user wants to connect or contact:
 4. Once they provide those details, draft a professional email on their behalf.
 5. Show the draft to the user in the chat and ask if they want any changes.
 6. If they want changes, update the draft and show it again.
-7. Once they approve the draft, output exactly <FINAL_MAILTO subject="[Insert Subject]" body="[Insert Body]"> so the system can generate the email link. (Make sure the subject and body inside the tags match the approved draft).`;
+7. Once they approve the draft, output exactly <FINAL_MAILTO subject="[Insert Subject]" body="[Insert Body]" /> so the system can generate the email link. (Make sure the subject and body inside the tags match the approved draft).`;
 
 export default function ChatAssistant() {
   const [isOpen, setIsOpen] = useState(false);
@@ -88,7 +90,7 @@ export default function ChatAssistant() {
     }
 
     // 2. Extract Final Mailto
-    const mailtoRegex = /<FINAL_MAILTO\s+subject="([^"]*)"\s+body="([^"]*)">/s;
+    const mailtoRegex = /<FINAL_MAILTO\s+subject="([^"]*)"\s+body="([^"]*)"\s*\/?>/s;
     const match = text.match(mailtoRegex);
     if (match) {
       text = text.replace(match[0], '');
@@ -113,7 +115,9 @@ export default function ChatAssistant() {
 
     return (
       <div className={styles.parsedMessage}>
-        <div className={styles.messageText}>{text.trim()}</div>
+        <div className={styles.messageText}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{text.trim()}</ReactMarkdown>
+        </div>
         {elements.length > 0 && <div className={styles.actionContainer}>{elements}</div>}
       </div>
     );

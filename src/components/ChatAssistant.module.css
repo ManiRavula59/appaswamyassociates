@@ -126,6 +126,19 @@
   border-bottom-right-radius: 4px;
 }
 
+.message.user .messageText {
+  color: white;
+}
+
+.message.user table th,
+.message.user table td {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.message.user table th {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
 .message.assistant {
   align-self: flex-start;
   background-color: #ffffff;
@@ -138,6 +151,45 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.messageText p {
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.messageText p:last-child {
+  margin-bottom: 0;
+}
+
+.messageText ul, .messageText ol {
+  margin-top: 4px;
+  margin-bottom: 8px;
+  padding-left: 20px;
+}
+
+.messageText table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 13px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.messageText th, .messageText td {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.messageText th {
+  background-color: rgba(0, 0, 0, 0.04);
+  font-weight: 600;
+}
+
+.messageText td {
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .actionContainer {
