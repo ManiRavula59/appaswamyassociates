@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { MessageSquare, X, Send, Mail, Phone } from 'lucide-react';
+import { MessageSquare, X, Send, Mail, Phone, Compass } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import styles from './ChatAssistant.module.css';
@@ -110,6 +110,28 @@ export default function ChatAssistant() {
         <a key="mail_fb" href="mailto:tejakrishnamanikantaravula59@gmail.com" className={styles.actionBtnEmail}>
           <Mail size={16} /> Contact via Email
         </a>
+      );
+    }
+
+    // 4. Extract Navigation Links
+    const navRegex = /<NAVIGATE_TO\s+url="([^"]+)">([^<]+)<\/NAVIGATE_TO>/gs;
+    let navMatch;
+    while ((navMatch = navRegex.exec(content)) !== null) {
+      const url = navMatch[1];
+      const label = navMatch[2];
+      text = text.replace(navMatch[0], '');
+      
+      elements.push(
+        <button 
+          key={`nav-${url}`} 
+          onClick={() => {
+            window.location.href = url;
+            setIsOpen(false); // Optionally close chat after navigating
+          }} 
+          className={styles.actionBtnNav}
+        >
+          <Compass size={16} /> {label}
+        </button>
       );
     }
 

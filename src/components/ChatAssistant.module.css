@@ -199,7 +199,7 @@
   margin-top: 8px;
 }
 
-.actionBtn, .actionBtnEmail {
+.actionBtn, .actionBtnEmail, .actionBtnNav {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -217,7 +217,7 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-.actionBtn:hover, .actionBtnEmail:hover {
+.actionBtn:hover, .actionBtnEmail:hover, .actionBtnNav:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 }
@@ -228,6 +228,10 @@
 
 .actionBtnEmail {
   background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.actionBtnNav {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
 }
 
 .inputArea {
