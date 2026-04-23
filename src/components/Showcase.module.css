@@ -1,0 +1,131 @@
+.showcaseSection {
+  background-color: var(--bg-primary);
+  overflow: hidden;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: var(--space-xl);
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+}
+
+.navBtn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  color: var(--text-primary);
+}
+
+.navBtn:not(.disabled):hover {
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
+  transform: scale(1.05);
+}
+
+.navBtn.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.carouselContainer {
+  width: 100%;
+  padding-left: max(var(--space-md), calc((100% - 1200px) / 2));
+}
+
+.carouselTrack {
+  display: flex;
+  gap: var(--space-lg);
+  overflow-x: auto;
+  padding-bottom: var(--space-xl); /* for shadows */
+  padding-right: var(--space-md);
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.carouselTrack::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.productCard {
+  min-width: 380px;
+  width: 380px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.imageBlock {
+  height: 460px;
+  background-color: var(--bg-secondary);
+  background-image: url('/images/showcase.png');
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  margin-bottom: var(--space-md);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.productCard:hover .imageBlock {
+  transform: scale(0.98);
+  box-shadow: var(--shadow-medium);
+}
+
+.exploreOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(26, 26, 26, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  border-radius: 20px;
+}
+
+.infoBlock h3 {
+  font-size: 1.4rem;
+  margin-bottom: 4px;
+}
+
+.infoBlock p {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+}
+
+@media (max-width: 768px) {
+  .headerContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+  .controls {
+    align-self: flex-end;
+  }
+  .productCard {
+    min-width: 300px;
+    width: 300px;
+  }
+  .imageBlock {
+    height: 380px;
+  }
+}

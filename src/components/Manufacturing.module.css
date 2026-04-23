@@ -1,0 +1,104 @@
+.manufacturingSection {
+  background-color: var(--bg-tertiary);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-giant);
+  align-items: center;
+}
+
+.imageContent {
+  height: 600px;
+  width: 100%;
+}
+
+.imagePlaceholder {
+  height: 100%;
+  width: 100%;
+  border-radius: 20px;
+  background-image: url('/images/manufacturing.png');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gradientOverlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.6) 100%);
+  z-index: 1;
+}
+
+.textContent {
+  padding-left: var(--space-xl);
+}
+
+.manufacturingSection h2 {
+  margin-bottom: var(--space-lg);
+  line-height: 1.25;
+}
+
+.facilities {
+  font-size: 1.1rem;
+  margin-bottom: var(--space-lg);
+  color: var(--text-primary);
+}
+
+.facilities span {
+  color: var(--accent-blue);
+  font-weight: 500;
+  display: inline-block;
+  margin-top: 4px;
+}
+
+.description {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xl);
+}
+
+.certifications {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.certBadge {
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #fff;
+  transition: background var(--transition-fast);
+  cursor: default;
+}
+
+.certBadge:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+  .imageContent {
+    height: 400px;
+    order: 2; /* Move image below text on mobile */
+  }
+  .textContent {
+    padding-left: 0;
+    order: 1;
+  }
+}

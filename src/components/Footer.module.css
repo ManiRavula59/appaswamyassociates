@@ -1,0 +1,142 @@
+.footer {
+  background-color: #0d0d0d;
+  color: #fff;
+  padding-top: var(--space-giant);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-giant);
+}
+
+.brandCol {
+  padding-right: var(--space-xl);
+}
+
+.logo {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-md);
+}
+
+.tagline {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+  margin-bottom: var(--space-lg);
+  line-height: 1.6;
+}
+
+.socials {
+  display: flex;
+  gap: 16px;
+}
+
+.socialIcon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  transition: all var(--transition-fast);
+}
+
+.socialIcon:hover {
+  background-color: var(--accent-blue);
+  transform: translateY(-2px);
+}
+
+.linksCol h4 {
+  font-size: 1.05rem;
+  margin-bottom: var(--space-md);
+  font-weight: 500;
+  color: #fff;
+}
+
+.linksCol ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.linksCol li {
+  margin-bottom: 12px;
+}
+
+.linksCol a {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+}
+
+.linksCol a:hover {
+  color: #fff;
+}
+
+.contactList li {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.bottomBar {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 24px 0;
+}
+
+.bottomContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bottomContainer p {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.legalLinks {
+  display: flex;
+  gap: 24px;
+}
+
+.legalLinks a {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.85rem;
+}
+
+.legalLinks a:hover {
+  color: #fff;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xxl) var(--space-xl);
+  }
+  .brandCol {
+    grid-column: span 2;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+  .brandCol {
+    grid-column: 1;
+  }
+  .bottomContainer {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+}
