@@ -32,9 +32,9 @@ const Footer = () => {
         <div className={styles.linksCol}>
           <h4>Company</h4>
           <ul>
-            <li><a href="#">About Us</a></li>
+            <li><a href="#about">About Us</a></li>
             <li><a href="#">Leadership</a></li>
-            <li><a href="#">Careers</a></li>
+            <li><button onClick={() => window.dispatchEvent(new CustomEvent('open-chat'))} style={{background: 'none', border: 'none', color: 'inherit', padding: 0, font: 'inherit', cursor: 'pointer', textAlign: 'left'}}>Careers</button></li>
             <li><a href="#">Global Reach</a></li>
           </ul>
         </div>
@@ -42,8 +42,11 @@ const Footer = () => {
         <div className={styles.linksCol}>
           <h4>Contact & Support</h4>
           <ul className={styles.contactList}>
-            <li>info@appasamy.com</li>
-            <li>+91-44-4004 3430</li>
+            <li>
+              <button onClick={() => window.dispatchEvent(new CustomEvent('open-chat'))} style={{background: 'none', border: 'none', color: 'inherit', padding: 0, font: 'inherit', cursor: 'pointer', textDecoration: 'underline'}}>
+                Chat with our AI Assistant
+              </button>
+            </li>
             <li><br/>KARUNA CONQUEST IT PARK<br/>Ambattur, Chennai - 600058</li>
           </ul>
         </div>

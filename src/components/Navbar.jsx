@@ -22,8 +22,8 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Products', href: '#products' },
     { name: 'About', href: '#about' },
-    { name: 'Support', href: '#support' },
-    { name: 'Careers', href: '#careers' },
+    { name: 'Support', action: () => window.dispatchEvent(new CustomEvent('open-chat')) },
+    { name: 'Careers', action: () => window.dispatchEvent(new CustomEvent('open-chat')) },
   ];
 
   return (
@@ -41,15 +41,21 @@ const Navbar = () => {
           {/* Desktop Nav */}
           <nav className={styles.desktopNav}>
             {navLinks.map((link) => (
-              <a key={link.name} href={link.href} className={styles.navLink}>
-                {link.name}
-              </a>
+              link.href ? (
+                <a key={link.name} href={link.href} className={styles.navLink}>
+                  {link.name}
+                </a>
+              ) : (
+                <button key={link.name} onClick={link.action} className={styles.navLink} style={{background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit', fontSize: 'inherit'}}>
+                  {link.name}
+                </button>
+              )
             ))}
           </nav>
 
           {/* Actions */}
           <div className={styles.actions}>
-            <button className={`btn btn-primary ${styles.ctaButton}`}>
+            <button className={`btn btn-primary ${styles.ctaButton}`} onClick={() => window.dispatchEvent(new CustomEvent('open-chat'))}>
               Get in Touch
             </button>
             <button 
@@ -86,17 +92,34 @@ const Navbar = () => {
             
             <div className={styles.mobileNavLinks}>
               {navLinks.map((link, i) => (
-                <motion.a 
-                  key={link.name} 
-                  href={link.href}
-                  className={styles.mobileNavLink}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 + 0.1 }}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {link.name} <ArrowRight size={16} />
-                </motion.a>
+                link.href ? (
+                  <motion.a 
+                    key={link.name} 
+                    href={link.href}
+                    className={styles.mobileNavLink}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 + 0.1 }}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {link.name} <ArrowRight size={16} />
+                  </motion.a>
+                ) : (
+                  <motion.button 
+                    key={link.name} 
+                    className={styles.mobileNavLink}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 + 0.1 }}
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      link.action();
+                    }}
+                    style={{background: 'none', border: 'none', textAlign: 'left', width: '100%', fontFamily: 'inherit'}}
+                  >
+                    {link.name} <ArrowRight size={16} />
+                  </motion.button>
+                )
               ))}
               
               <motion.button 
@@ -104,6 +127,10 @@ const Navbar = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  window.dispatchEvent(new CustomEvent('open-chat'));
+                }}
               >
                 Get in Touch
               </motion.button>

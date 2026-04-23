@@ -14,10 +14,10 @@ const CallToAction = () => {
               Partner with the pioneers of ophthalmic innovation. Discover how our premium, affordable solutions can elevate your clinical practice.
             </p>
             <div className={styles.btnGroup}>
-              <button className="btn btn-primary" style={{backgroundColor: '#fff', color: '#1a1a1a'}}>
+              <button className="btn btn-primary" style={{backgroundColor: '#fff', color: '#1a1a1a'}} onClick={() => window.dispatchEvent(new CustomEvent('open-chat'))}>
                 Get Started
               </button>
-              <button className="btn btn-ghost" style={{borderColor: 'rgba(255,255,255,0.4)', color: '#fff'}}>
+              <button className="btn btn-ghost" style={{borderColor: 'rgba(255,255,255,0.4)', color: '#fff'}} onClick={() => window.location.href='#products'}>
                 Explore Products
               </button>
             </div>

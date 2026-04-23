@@ -78,6 +78,8 @@ const Showcase = () => {
               <div className={styles.imageBlock}>
                 <motion.div 
                   className={styles.exploreOverlay}
+                  onClick={() => window.location.href='#products'}
+                  style={{cursor: 'pointer'}}
                   variants={{
                     hover: { opacity: 1, scale: 1 }
                   }}

@@ -63,8 +63,8 @@ const Hero = () => {
           </motion.p>
           
           <motion.div variants={childVars} className={styles.ctaGroup}>
-            <button className="btn btn-primary">Explore Products</button>
-            <button className="btn btn-ghost">Talk to an Expert</button>
+            <button className="btn btn-primary" onClick={() => window.location.href='#products'}>Explore Products</button>
+            <button className="btn btn-ghost" onClick={() => window.dispatchEvent(new CustomEvent('open-chat'))}>Talk to an Expert</button>
           </motion.div>
         </motion.div>
 

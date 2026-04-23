@@ -36,6 +36,13 @@ export default function ChatAssistant() {
     }
   }, [messages, isOpen]);
 
+  // Global event listener to open chat from other components
+  useEffect(() => {
+    const handleOpenChat = () => setIsOpen(true);
+    window.addEventListener('open-chat', handleOpenChat);
+    return () => window.removeEventListener('open-chat', handleOpenChat);
+  }, []);
+
   const callBedrockAPI = async (userMessage, conversationHistory) => {
     try {
       const response = await fetch('http://localhost:8001/api/chat', {
