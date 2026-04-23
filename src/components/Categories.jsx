@@ -62,7 +62,11 @@ const Categories = () => {
               <h3>{category.title}</h3>
               <p>{category.desc}</p>
               
-              <div className={styles.linkWrapper}>
+              <div 
+                className={styles.linkWrapper}
+                onClick={() => window.dispatchEvent(new CustomEvent('explore-category', { detail: category.title }))}
+                style={{cursor: 'pointer'}}
+              >
                 <span className={styles.linkText}>Explore</span>
                 <ArrowRight size={18} className={styles.linkIcon} />
               </div>

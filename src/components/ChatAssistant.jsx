@@ -39,9 +39,38 @@ export default function ChatAssistant() {
   // Global event listener to open chat from other components
   useEffect(() => {
     const handleOpenChat = () => setIsOpen(true);
+    
+    const handleExploreCategory = async (e) => {
+      const categoryTitle = e.detail;
+      setIsOpen(true);
+      
+      const exploreMessage = `I want to explore the ${categoryTitle} category. What products do you offer in this category?`;
+      const userMsg = { role: 'user', content: exploreMessage };
+      
+      // We need to use the functional update form to ensure we have the latest messages
+      setMessages(prev => {
+        const newHistory = [...prev, userMsg];
+        // Now trigger the API call
+        triggerAI(exploreMessage, newHistory);
+        return newHistory;
+      });
+    };
+
     window.addEventListener('open-chat', handleOpenChat);
-    return () => window.removeEventListener('open-chat', handleOpenChat);
+    window.addEventListener('explore-category', handleExploreCategory);
+    
+    return () => {
+      window.removeEventListener('open-chat', handleOpenChat);
+      window.removeEventListener('explore-category', handleExploreCategory);
+    };
   }, []);
+
+  const triggerAI = async (userMessage, conversationHistory) => {
+    setIsLoading(true);
+    const aiResponse = await callBedrockAPI(userMessage, conversationHistory);
+    setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }]);
+    setIsLoading(false);
+  };
 
   const callBedrockAPI = async (userMessage, conversationHistory) => {
     try {
@@ -72,14 +101,11 @@ export default function ChatAssistant() {
     if (!input.trim() || isLoading) return;
 
     const userMsg = { role: 'user', content: input };
-    setMessages(prev => [...prev, userMsg]);
+    const newHistory = [...messages, userMsg];
+    setMessages(newHistory);
     setInput('');
-    setIsLoading(true);
-
-    const aiResponse = await callBedrockAPI(input, messages);
     
-    setMessages(prev => [...prev, { role: 'assistant', content: aiResponse }]);
-    setIsLoading(false);
+    triggerAI(input, newHistory);
   };
 
   const parseMessageContent = (content) => {
